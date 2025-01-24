@@ -91,7 +91,7 @@ def generate_markdown(ue_df: pd.DataFrame, out_file_name: str = None):
                 file.write(f"   {line} \n")
         if ue_df["image"]["value"] is not None:
             file.write(
-                f"   ![Figure](src/figures/{ue_df['image']['value']}) \n"
+                f"   ![Figure](./src/figures/{ue_df['image']['value']}) \n"
             )
         return f"{out_file_name}.md"
 
