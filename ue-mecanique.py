@@ -89,15 +89,21 @@ def generate_markdown(ue_df: pd.DataFrame, out_file_name: str = None):
             file.write("\n - **Bibliographie** : \n")
             for line in ue_df["biblio"]["value"].split("\n"):
                 file.write(f"   {line} \n")
+        # add image if it is given
         if ue_df["image"]["value"] is not None:
-            file.write(
-                f"   ![Figure](./src/figures/{ue_df['image']['value']}) \n"
-            )
+            image_dir = f"{out_dir_name}/figures"
+            if not os.path.exists(image_dir):
+                os.makedirs(image_dir)
+            # check that the image exists or trow a warning
+            if not os.path.exists(f"src/figures/{ue_df['image']['value']}"):
+                print(
+                    f"Warning: image {ue_df['image']['value']} does not exist in src/figures"
+                )
+            # copy the image to the out directory
+            os.system(f"cp src/figures/{ue_df['image']['value']} {image_dir}")
+            file.write(f"   ![Figure](figures/{ue_df['image']['value']}) \n")
         return f"{out_file_name}.md"
 
-
-##
-src_files = glob.glob("src/U*")
 
 # %%
 
@@ -120,7 +126,12 @@ for file_name in src_files:
         yaml.dump(ue_df.to_dict(), file, encoding=("utf-8"))
 
     # Convert to pdf and html
-    pdoc_args = ["-V", "geometry:margin=1.5cm", "--mathjax"]
+    pdoc_args = [
+        "-V",
+        "geometry:margin=1.5cm",
+        "--mathjax",
+        "--resource-path=src",
+    ]
     pypandoc.convert_file(
         f"{out_file_name}.md",
         "pdf",

@@ -37,4 +37,4 @@
    - Mécanique de la rupture fragile et ductile, Hermès - Lavoisier, 2003 (available in the university libraries) 
    - T.L. Anderson, Fracture Mechanics. Fundamentals and applications, CRC Press, Taylor & Francis Group, 2005 
    - MEALORII Damage Mechanics and Local Approach to Fracture-Ch. 5 and Ch.12 - https://doi.org/10.5281/zenodo.10125170 
-   ![Figure](./src/figures/UM5MES02-fig.pdf) 
+   ![Figure](figures/UM5MES02-fig.png) 
