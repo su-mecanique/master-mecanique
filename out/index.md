@@ -1,3 +1,4 @@
 # Liste des UE  
- - [UM5MES03 - Mon cours (My course)](UM5MES03.md)  
- - [UM5MES02 - Mécanique de la rupture (Fracture mechanics)](UM5MES02.md)  
+ - [UM5MES03 - Mon cours (My course)](out/UM5MES03.md). Résp. Corrado Maurini. Rappel de l'élasticité linéaire et de sa formulation variationnelle; critères en contraintes et défauts en élasticité linéaire ; singularités ; modes de rupture ; ténacité à la rupture ; critère d'Irwin ; approche énergétique (variationnelle) de la rupture; théorie de Griffith ; calcul numérique du taux de restitution d'énergie ; méthode G-theta (dérivée de domaine) ; formule d'Irwin ; propagation des fissures; fatigue; dimensionnement à fatigue 
+  - [UM5MES02 - Mécanique de la rupture (Fracture mechanics)](out/UM5MES02.md). Résp. Corrado Maurini. Rappel de l'élasticité linéaire et de sa formulation variationnelle; critères en contraintes et défauts en élasticité linéaire ; singularités ; modes de rupture ; ténacité à la rupture ; critère d'Irwin ; approche énergétique (variationnelle) de la rupture; théorie de Griffith ; calcul numérique du taux de restitution d'énergie ; méthode G-theta (dérivée de domaine) ; formule d'Irwin ; propagation des fissures; fatigue; dimensionnement à fatigue 
+ 

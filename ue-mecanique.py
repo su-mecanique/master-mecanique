@@ -90,11 +90,10 @@ def generate_markdown(ue_df: pd.DataFrame, out_file_name: str = None):
             for line in ue_df["biblio"]["value"].split("\n"):
                 file.write(f"   {line} \n")
         return f"{out_file_name}.md"
-    
-## 
-src_files = glob.glob("src/U*")
-for file_name in src_files:
 
+
+##
+src_files = glob.glob("src/U*")
 
 # %%
 
@@ -130,21 +129,26 @@ for file_name in src_files:
         extra_args=pdoc_args,
         outputfile=f"{out_file_name}.html",
     )
-    
+
     # add "pdf_file" in the dataframe
-    ue_df.at["pdf_file", "value"] = f"{out_file_name}.pdf"
-    ue_df.at["html_file", "value"] = f"{out_file_name}.html"
-    ue_df.loc["md_file", "value"] = f"{out_file_name}.md"
+    ue_df.loc["tag", "pdf_file"] = "Fichier PDF"
+    ue_df.loc["value", "pdf_file"] = f"{out_file_name}.pdf"
+    ue_df.loc["tag", "md_file"] = "Fichier MD"
+    ue_df.loc["value", "md_file"] = f"{out_file_name}.md"
     list_ue.append(ue_df)
 
 
 # %%
 # print a md file with all the links
-with open(f"{out_dir_name}/index.md", "w") as file:
+with open(f"README.md", "w") as file:
     file.write("# Liste des UE  \n")
     for ue_df in list_ue:
         file.write(
-            f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['code']['value']}.md)  \n"
+            f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
         )
 
 # %%
+# add a tag to the dataframe
+list_ue[0].head()
+# %%
+# add a tag to the dataframe
