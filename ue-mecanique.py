@@ -146,9 +146,3 @@ with open(f"README.md", "w") as file:
         file.write(
             f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
         )
-
-# %%
-# add a tag to the dataframe
-list_ue[0].head()
-# %%
-# add a tag to the dataframe
