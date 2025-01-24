@@ -19,12 +19,12 @@
   
 ## Informations pédagogiques  
 
- - **Contenu (FR)** : Short review of linear elasticity and its variational formulation; stress criteria and defects in linear elasticity;  stress singularities; fracture modes; fracture toughness; Irwin criterion; energetic (variational) approach to fracture, Griffith’s theory; Numerical computation of the energy release rate; G-theta method (domain derivative); Irwin frmula; crack propagation, fatigue.
+ - **Contenu (FR)** : Rappel de l'élasticité linéaire et de sa formulation variationnelle; critères en contraintes et défauts en élasticité linéaire ; singularités ; modes de rupture ; ténacité à la rupture ; critère d'Irwin ; approche énergétique (variationnelle) de la rupture; théorie de Griffith ; calcul numérique du taux de restitution d'énergie ; méthode G-theta (dérivée de domaine) ; formule d'Irwin ; propagation des fissures; fatigue; dimensionnement à fatigue 
+
+ - **Content (EN)** : Short review of linear elasticity and its variational formulation; stress criteria and defects in linear elasticity;  stress singularities; fracture modes; fracture toughness; Irwin criterion; energetic (variational) approach to fracture, Griffith’s theory; Numerical computation of the energy release rate; G-theta method (domain derivative); Irwin frmula; crack propagation, fatigue.
 
 
 $$\min_u\mathcal{E}(u)$$ 
-
- - **Content (EN)** : Rappel de l'élasticité linéaire et de sa formulation variationnelle; critères en contraintes et défauts en élasticité linéaire ; singularités ; modes de rupture ; ténacité à la rupture ; critère d'Irwin ; approche énergétique (variationnelle) de la rupture; théorie de Griffith ; calcul numérique du taux de restitution d'énergie ; méthode G-theta (dérivée de domaine) ; formule d'Irwin ; propagation des fissures; fatigue; dimensionnement à fatigue 
 
  - **Mots clé (FR)** : Rupture; propagation des fissures; Critére de Griffith; critére de Irwin; adoucissement/écrouissage structurel; évolution quasi-statique; approche variationnel; taux de réstitution de l'énergie; singularités 
 

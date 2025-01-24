@@ -141,8 +141,11 @@ for file_name in src_files:
 # %%
 # print a md file with all the links
 with open(f"README.md", "w") as file:
+    print("Writing README.md")
     file.write("# Liste des UE  \n")
     for ue_df in list_ue:
         file.write(
             f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
         )
+
+# %%
