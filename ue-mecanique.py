@@ -97,7 +97,7 @@ src_files = glob.glob("src/U*")
 
 # %%
 
-
+# generate a list of UEs
 src_files = glob.glob("src/U*")
 list_ue = []
 for file_name in src_files:
