@@ -51,20 +51,20 @@ edt:
   value: null
 content_fr:
   tag: Contenu (FR)
+  value: "Rappel de l'\xE9lasticit\xE9 lin\xE9aire et de sa formulation variationnelle;\
+    \ crit\xE8res en contraintes et d\xE9fauts en \xE9lasticit\xE9 lin\xE9aire ; singularit\xE9\
+    s ; modes de rupture ; t\xE9nacit\xE9 ; crit\xE8re d'Irwin ; approche \xE9nerg\xE9\
+    tique (variationnelle) de la rupture; th\xE9orie de Griffith ; calcul num\xE9\
+    rique du taux de restitution d'\xE9nergie ; m\xE9thode G-theta (d\xE9riv\xE9e\
+    \ par rapport au domaine) ; formule d'Irwin ; propagation des fissures; fatigue;\
+    \ dimensionnement \xE0 fatigue"
+content_en:
+  tag: Content (EN)
   value: "Short review of linear elasticity and its variational formulation; stress\
     \ criteria and defects in linear elasticity;  stress singularities; fracture modes;\
     \ fracture toughness; Irwin criterion; energetic (variational) approach to fracture,\
     \ Griffith\u2019s theory; Numerical computation of the energy release rate; G-theta\
     \ method (domain derivative); Irwin frmula; crack propagation, fatigue."
-content_en:
-  tag: Content (EN)
-  value: "Rappel de l'\xE9lasticit\xE9 lin\xE9aire et de sa formulation variationnelle;\
-    \ crit\xE8res en contraintes et d\xE9fauts en \xE9lasticit\xE9 lin\xE9aire ; singularit\xE9\
-    s ; modes de rupture ; t\xE9nacit\xE9 \xE0 la rupture ; crit\xE8re d'Irwin ; approche\
-    \ \xE9nerg\xE9tique (variationnelle) de la rupture; th\xE9orie de Griffith ; calcul\
-    \ num\xE9rique du taux de restitution d'\xE9nergie ; m\xE9thode G-theta (d\xE9\
-    riv\xE9e de domaine) ; formule d'Irwin ; propagation des fissures; fatigue; dimensionnement\
-    \ \xE0 fatigue"
 keywords_fr:
   tag: "Mots cl\xE9 (FR)"
   value: "Rupture; propagation des fissures; Crit\xE9re de Griffith; crit\xE9re de\
@@ -108,4 +108,7 @@ program:
     \ 7, 12/11/2024\n\nExamples\nLecture 8, 19/11/2024\n\nExamples/Seminar"
 other:
   tag: Autres
+  value: null
+image:
+  tag: Nom de fichier pour une image
   value: null
