@@ -110,3 +110,6 @@ program:
 other:
   tag: Autres
   value: null
+image:
+  tag: Nom de fichier pour une image
+  value: null
