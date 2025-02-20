@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+
+import argparse
+import pathlib
+import mimetypes
+import jinja2
+import shutil
+
+from ue_mecanique import load_excel
+
+
+def is_excel(path: pathlib.Path):
+    "Check if path is an excel file"
+    if not path.exists():
+        return False
+
+    mime = mimetypes.guess_type(path.absolute().as_uri())[0]
+    return mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+
+def render_markdown(template: jinja2.Template, info: dict):
+    "Render dict to a markdown file"
+    info["GENERIC_INFOS"] = {k: v for k, v in info.items() if k in GENERIC_INFOS}
+    info["PEDAGOGICAL_INFOS"] = {
+        k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
+    }
+    return template.render(**info)
+    
+def extract_image(filename: str):
+    "Extract image embeded into an excel file"
+    if not is_excel(filename):
+        return
+
+
+
+
+GENERIC_INFOS = [
+    "title_en",
+    "title_fr",
+    "code",
+    "resp_name",
+    "resp_mail",
+    "h_cm",
+    "h_td",
+    "h_tp",
+    "h_pr",
+    "ects",
+    "semester",
+    "period",
+    "lang",
+    "public",
+    "where",
+    #   "edt", put as a link (special case)
+]
+
+PEDAGOGICAL_INFOS = [
+    "content_fr",
+    "content_en",
+    "keywords_fr",
+    "keywords_en",
+    "prereq_fr",
+    "prereq_en",
+]
+
+
+mimetypes.init()
+
+parser = argparse.ArgumentParser(description="Convert excel file to markdown")
+parser.add_argument("file", type=pathlib.Path)
+parser.add_argument("-o", "--output-dir", type=pathlib.Path, required=True)
+parser.add_argument("-t", "--template", type=pathlib.Path, required=True)
+
+args = parser.parse_args()
+
+# Creating output directory
+args.output_dir.mkdir(parents=True, exist_ok=True)
+
+# Reading template
+with open(args.template) as fd:
+    template = jinja2.Template(fd.read())
+
+# Generating the file
+file = args.file
+info = load_excel(file, comment="#", index_col=0).to_dict()
+markdown = render_markdown(template, info)
+out_file = args.output_dir / (file.stem + ".md")
+
+if "image" in info:
+    figures = args.output_dir / "figures"
+    figures.mkdir(exist_ok=True)
+    img = file.parent / "figures" / info["image"]["value"]
+    shutil.copyfile(img, figures / img.name)
+
+with open(out_file, "w") as fd:
+    fd.write(markdown)
+

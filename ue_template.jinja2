@@ -1,0 +1,24 @@
+---
+title: "{{ code.value }} -- {{ title_fr.value }} ({{ title_en.value }})"
+{% if image is defined %}
+image: "figures/{{ image.value }}"
+{% endif %}
+---
+
+# Informations générales
+{% for _, info in GENERIC_INFOS.items() %}
+- **{{ info.tag }}** : {{ info.value }}
+{%- endfor %}
+
+# Informations pédagogiques
+{% for _, info in PEDAGOGICAL_INFOS.items() %}
+- **{{ info.tag }}** : {{ info.value }}
+{%- endfor %}
+- **Bibliographie** :
+{%- for line in biblio.value.split('\n') %}
+  {{ line }}
+{%- endfor %}
+
+{% if image is defined %}
+![Figure](figures/{{ image.value }})
+{% endif %}
