@@ -5,7 +5,9 @@ import pathlib
 import mimetypes
 import jinja2
 import shutil
+import os
 
+from zipfile import ZipFile
 from ue_mecanique import load_excel
 
 
@@ -26,13 +28,26 @@ def render_markdown(template: jinja2.Template, info: dict):
     }
     return template.render(**info)
     
-def extract_image(filename: str):
+def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
     "Extract image embeded into an excel file"
     if not is_excel(filename):
         return
 
+    fh = ZipFile(filename)
+    media = [name for name in fh.namelist() if name.startswith('xl/media')]
 
+    if len(media) == 0:
+        return
 
+    image = pathlib.Path(media[0])
+
+    figure_dir = output_dir / 'figures'
+    figure_dir.mkdir(exist_ok=True)
+
+    figure = figure_dir / (filename.stem + image.suffix)
+    extracted = fh.extract(str(image))
+    os.rename(extracted, figure)
+    return figure
 
 GENERIC_INFOS = [
     "title_en",
@@ -81,15 +96,14 @@ with open(args.template) as fd:
 
 # Generating the file
 file = args.file
+image_file = extract_image(file, args.output_dir)
 info = load_excel(file, comment="#", index_col=0).to_dict()
+
+if image_file is not None:
+    info["image"] = dict(value=image_file.name)
+
 markdown = render_markdown(template, info)
 out_file = args.output_dir / (file.stem + ".md")
-
-if "image" in info:
-    figures = args.output_dir / "figures"
-    figures.mkdir(exist_ok=True)
-    img = file.parent / "figures" / info["image"]["value"]
-    shutil.copyfile(img, figures / img.name)
 
 with open(out_file, "w") as fd:
     fd.write(markdown)
