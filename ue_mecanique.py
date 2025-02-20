@@ -11,11 +11,8 @@ def load_excel(
     filename: str, path: str = os.getcwd(), tab: int = 0, **kwargs
 ) -> pd.DataFrame:
     """Load a tab of an excel file."""
-    if not os.path.isfile(os.path.join(path, filename)):
-        raise OSError(f"File '{os.path.join(path, filename)}' not found.")
-
     df = pd.read_excel(
-        os.path.join(path, filename),
+        filename,
         sheet_name=tab,
         engine="openpyxl",
         usecols=[0, 1, 2],
@@ -23,18 +20,13 @@ def load_excel(
     )
     df = df.where(pd.notnull(df), None)
     # reverse rows and columns
-    df = df.transpose()
+    df = df.dropna().transpose()
 
     return df
 
 
-# list all the files in the directory
-
-
-# import excel file as a dataframe and convert it to a dictionary
-
-
-def generate_markdown(ue_df: pd.DataFrame, out_file_name: str = None):
+def generate_markdown(ue_df: pd.DataFrame, out_dir_name: str, out_file_name: str = None):
+    "import excel file as a dataframe and convert it to a dictionary"
     ue_code = ue_df["code"]["value"]
     print(f"Generating markdown for {ue_code}")
 
@@ -107,60 +99,61 @@ def generate_markdown(ue_df: pd.DataFrame, out_file_name: str = None):
 
 # %%
 
-# generate a list of UEs
-src_files = glob.glob("src/U*")
-list_ue = []
-for file_name in src_files:
-    print(f"Processing {file_name}")
-    # Load the excel file
-    ue_df = load_excel(file_name, comment="#", index_col=0)
-    ue_code = ue_df["code"]["value"]
-    out_dir_name = "out"
-    out_file_name = f"{out_dir_name}/{ue_code}"
+def main():
+    "generate a list of UEs"
+    src_files = glob.glob("src/U*.xlsx")
+    list_ue = []
+    for file_name in src_files:
+        print(f"Processing {file_name}")
+        # Load the excel file
+        ue_df = load_excel(file_name, comment="#", index_col=0)
+        ue_code = ue_df["code"]["value"]
+        out_dir_name = "out"
+        out_file_name = f"{out_dir_name}/{ue_code}"
 
-    # Generate markdown file
-    md_file = generate_markdown(ue_df, out_file_name)
+        # Generate markdown file
+        md_file = generate_markdown(ue_df, out_dir_name, out_file_name)
 
-    # Convert markdown to yaml dict
-    with open(f"{out_file_name}.yaml", "w") as file:
-        yaml.dump(ue_df.to_dict(), file, encoding=("utf-8"))
+        # Convert markdown to yaml dict
+        with open(f"{out_file_name}.yaml", "w") as file:
+            yaml.dump(ue_df.to_dict(), file, encoding=("utf-8"))
 
-    # Convert to pdf and html
-    pdoc_args = [
-        "-V",
-        "geometry:margin=1.5cm",
-        "--mathjax",
-        "--resource-path=src",
-    ]
-    pypandoc.convert_file(
-        f"{out_file_name}.md",
-        "pdf",
-        extra_args=pdoc_args,
-        outputfile=f"{out_file_name}.pdf",
-    )
-    pypandoc.convert_file(
-        f"{out_file_name}.md",
-        "html",
-        extra_args=pdoc_args,
-        outputfile=f"{out_file_name}.html",
-    )
-
-    # add "pdf_file" in the dataframe
-    ue_df.loc["tag", "pdf_file"] = "Fichier PDF"
-    ue_df.loc["value", "pdf_file"] = f"{out_file_name}.pdf"
-    ue_df.loc["tag", "md_file"] = "Fichier MD"
-    ue_df.loc["value", "md_file"] = f"{out_file_name}.md"
-    list_ue.append(ue_df)
-
-
-# %%
-# print a md file with all the links
-with open(f"README.md", "w") as file:
-    print("Writing README.md")
-    file.write("# Liste des UE  \n")
-    for ue_df in list_ue:
-        file.write(
-            f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
+        # Convert to pdf and html
+        pdoc_args = [
+            "-V",
+            "geometry:margin=1.5cm",
+            "--mathjax",
+            "--resource-path=src",
+        ]
+        pypandoc.convert_file(
+            f"{out_file_name}.md",
+            "pdf",
+            extra_args=pdoc_args,
+            outputfile=f"{out_file_name}.pdf",
+        )
+        pypandoc.convert_file(
+            f"{out_file_name}.md",
+            "html",
+            extra_args=pdoc_args,
+            outputfile=f"{out_file_name}.html",
         )
 
-# %%
+        # add "pdf_file" in the dataframe
+        ue_df.loc["tag", "pdf_file"] = "Fichier PDF"
+        ue_df.loc["value", "pdf_file"] = f"{out_file_name}.pdf"
+        ue_df.loc["tag", "md_file"] = "Fichier MD"
+        ue_df.loc["value", "md_file"] = f"{out_file_name}.md"
+        list_ue.append(ue_df)
+
+    # print a md file with all the links
+    with open(f"README.md", "w") as file:
+        print("Writing README.md")
+        file.write("# Liste des UE  \n")
+        for ue_df in list_ue:
+            file.write(
+                f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
+            )
+
+
+if __name__ == "__main__":
+    main()
