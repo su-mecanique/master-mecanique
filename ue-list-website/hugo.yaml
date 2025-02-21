@@ -1,0 +1,44 @@
+baseurl: "https://su-mecanique.github.io/master-mecanique/"
+languageCode: "fr-fr"
+title: "List des UE du master mécanique Sorbonne Université"
+theme: "hugo-xmin"
+googleAnalytics: ""
+disqusShortname: ""
+ignoreFiles: ["\\.Rmd$", "\\.Rmarkdown$", "_cache$"]
+footnotereturnlinkcontents: "↩"
+
+permalinks:
+  note: "/note/:year/:month/:day/:slug/"
+  post: "/post/:year/:month/:day/:slug/"
+
+menu:
+  main:
+    - name: Accueil
+      url: ""
+      weight: 1
+    - name: Liste des UE
+      url: "page/"
+      weight: 2
+
+params:
+  description: ""
+  footer: "&copy; [Sorbonne Université](https://masters-sdi.sorbonne-universite.fr/la-mention-mecanique) {Year}"
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
