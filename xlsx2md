@@ -5,106 +5,50 @@ import pathlib
 import mimetypes
 import jinja2
 import shutil
+import json
 import os
 
 from zipfile import ZipFile
-from ue_mecanique import load_excel
+from ue_mecanique import load_excel, is_excel, render_markdown, extract_image
 
 
-def is_excel(path: pathlib.Path):
-    "Check if path is an excel file"
-    if not path.exists():
-        return False
+def main():
+    mimetypes.init()
 
-    mime = mimetypes.guess_type(path.absolute().as_uri())[0]
-    return mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    parser = argparse.ArgumentParser(description="Convert excel file to markdown")
+    parser.add_argument("file", type=pathlib.Path)
+    parser.add_argument("-o", "--output-dir", type=pathlib.Path, required=True)
+    parser.add_argument("-t", "--template", type=pathlib.Path, required=True)
+    parser.add_argument("--tags", type=pathlib.Path, required=True)
 
+    args = parser.parse_args()
 
-def render_markdown(template: jinja2.Template, info: dict):
-    "Render dict to a markdown file"
-    info["GENERIC_INFOS"] = {k: v for k, v in info.items() if k in GENERIC_INFOS}
-    info["PEDAGOGICAL_INFOS"] = {
-        k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
-    }
-    return template.render(**info)
-    
-def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
-    "Extract image embeded into an excel file"
-    if not is_excel(filename):
-        return
+    # Creating output directory
+    args.output_dir.mkdir(parents=True, exist_ok=True)
 
-    fh = ZipFile(filename)
-    media = [name for name in fh.namelist() if name.startswith('xl/media')]
+    # Reading template
+    with open(args.template) as fd:
+        template = jinja2.Template(fd.read())
 
-    if len(media) == 0:
-        return
+    # Reading tags
+    with open(args.tags) as fh:
+        tags = json.load(fh)
 
-    image = pathlib.Path(media[0])
+    # Generating the file
+    file = args.file
+    image_file = extract_image(file, args.output_dir)
+    info = load_excel(file, comment="#", index_col=0).to_dict()
 
-    figure_dir = output_dir / 'figures'
-    figure_dir.mkdir(exist_ok=True)
+    if image_file is not None:
+        info["image"] = dict(value=image_file.name)
 
-    figure = figure_dir / (filename.stem + image.suffix)
-    extracted = fh.extract(str(image))
-    os.rename(extracted, figure)
-    return figure
+    info["tags"] = tags[info["code"]["value"]]
+    markdown = render_markdown(template, info)
+    out_file = args.output_dir / (file.stem + ".md")
 
-GENERIC_INFOS = [
-    "title_en",
-    "title_fr",
-    "code",
-    "resp_name",
-    "resp_mail",
-    "h_cm",
-    "h_td",
-    "h_tp",
-    "h_pr",
-    "ects",
-    "semester",
-    "period",
-    "lang",
-    "public",
-    "where",
-    #   "edt", put as a link (special case)
-]
-
-PEDAGOGICAL_INFOS = [
-    "content_fr",
-    "content_en",
-    "keywords_fr",
-    "keywords_en",
-    "prereq_fr",
-    "prereq_en",
-]
+    with open(out_file, "w") as fd:
+        fd.write(markdown)
 
 
-mimetypes.init()
-
-parser = argparse.ArgumentParser(description="Convert excel file to markdown")
-parser.add_argument("file", type=pathlib.Path)
-parser.add_argument("-o", "--output-dir", type=pathlib.Path, required=True)
-parser.add_argument("-t", "--template", type=pathlib.Path, required=True)
-
-args = parser.parse_args()
-
-# Creating output directory
-args.output_dir.mkdir(parents=True, exist_ok=True)
-
-# Reading template
-with open(args.template) as fd:
-    template = jinja2.Template(fd.read())
-
-# Generating the file
-file = args.file
-image_file = extract_image(file, args.output_dir)
-info = load_excel(file, comment="#", index_col=0).to_dict()
-
-if image_file is not None:
-    info["image"] = dict(value=image_file.name)
-
-markdown = render_markdown(template, info)
-out_file = args.output_dir / (file.stem + ".md")
-
-with open(out_file, "w") as fd:
-    fd.write(markdown)
-
+if __name__ == "__main__":
+    main()

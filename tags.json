@@ -1,0 +1,10 @@
+{
+ "UM5MES03": [
+  "fluide",
+  "comp_mech"
+ ],
+ "UM5MES02": [
+  "solide",
+  "comp_mech"
+ ]
+}

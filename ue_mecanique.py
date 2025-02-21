@@ -5,6 +5,12 @@ import yaml
 import pypandoc
 import glob
 import os
+import pathlib
+import mimetypes
+import jinja2
+import shutil
+
+from zipfile import ZipFile
 
 
 def load_excel(
@@ -96,6 +102,72 @@ def generate_markdown(ue_df: pd.DataFrame, out_dir_name: str, out_file_name: str
             file.write(f"   ![Figure](figures/{ue_df['image']['value']}) \n")
         return f"{out_file_name}.md"
 
+
+def is_excel(path: pathlib.Path):
+    "Check if path is an excel file"
+    if not path.exists():
+        return False
+
+    mime = mimetypes.guess_type(path.absolute().as_uri())[0]
+    return mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+
+def render_markdown(template: jinja2.Template, info: dict):
+    "Render dict to a markdown file"
+    info["GENERIC_INFOS"] = {k: v for k, v in info.items() if k in GENERIC_INFOS}
+    info["PEDAGOGICAL_INFOS"] = {
+        k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
+    }
+    return template.render(**info)
+    
+def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
+    "Extract image embeded into an excel file"
+    if not is_excel(filename):
+        return
+
+    fh = ZipFile(filename)
+    media = [name for name in fh.namelist() if name.startswith('xl/media')]
+
+    if len(media) == 0:
+        return
+
+    image = pathlib.Path(media[0])
+
+    figure_dir = output_dir / 'figures'
+    figure_dir.mkdir(exist_ok=True)
+
+    figure = figure_dir / (filename.stem + image.suffix)
+    extracted = fh.extract(str(image))
+    os.rename(extracted, figure)
+    return figure
+
+GENERIC_INFOS = [
+    "title_en",
+    "title_fr",
+    "code",
+    "resp_name",
+    "resp_mail",
+    "h_cm",
+    "h_td",
+    "h_tp",
+    "h_pr",
+    "ects",
+    "semester",
+    "period",
+    "lang",
+    "public",
+    "where",
+    #   "edt", put as a link (special case)
+]
+
+PEDAGOGICAL_INFOS = [
+    "content_fr",
+    "content_en",
+    "keywords_fr",
+    "keywords_en",
+    "prereq_fr",
+    "prereq_en",
+]
 
 # %%
 

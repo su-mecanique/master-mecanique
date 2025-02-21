@@ -1,8 +1,14 @@
 ---
 title: "{{ code.value }} -- {{ title_fr.value }} ({{ title_en.value }})"
+author: "{{ resp_name.value }}"
 {% if image is defined %}
 image: "figures/{{ image.value }}"
 {% endif %}
+tags:
+{% for tag in tags %}
+   - {{ tag }}
+{%- endfor %}
+date: ""
 ---
 
 # Informations générales

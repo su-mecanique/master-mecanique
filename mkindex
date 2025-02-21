@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import argparse
+import pathlib
+import mimetypes
+import jinja2
+import shutil
+import json
+import os
+
+from zipfile import ZipFile
+from ue_mecanique import load_excel, render_markdown
+
+
+def collect_tags(tags):
+    tag_set = set()
+    for tag_list in tags.values():
+        tag_set |= set(tag_list)
+    return list(tag_set)
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Convert excel file to markdown")
+    parser.add_argument("file", nargs="+", type=pathlib.Path)
+    parser.add_argument("-o", "--output", type=pathlib.Path, required=True)
+    parser.add_argument("-t", "--template", type=pathlib.Path, required=True)
+    parser.add_argument("--tags", type=pathlib.Path, required=True)
+
+    args = parser.parse_args()
+
+    # Reading template
+    with open(args.template) as fd:
+        template = jinja2.Template(fd.read())
+
+    collected_infos = {"UE_codes": {}}
+
+    with open(args.tags, 'r') as fh:
+        tags = json.load(fh)
+
+    collected_infos["tags"] = collect_tags(tags)
+
+    # Generating the file
+    for file in args.file:
+        info = load_excel(file, comment="#", index_col=0).to_dict()
+        collected_infos["UE_codes"][file.stem] = info
+
+    markdown = render_markdown(template, collected_infos)
+
+    with open(args.output, "w") as fd:
+        fd.write(markdown)
+
+if __name__ == "__main__":
+    main()

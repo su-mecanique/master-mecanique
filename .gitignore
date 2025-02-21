@@ -3,3 +3,6 @@ out
 ~*
 __pycache__
 .venv
+
+ue-list-website/content
+*.lock
