@@ -29,14 +29,14 @@ jobs:
     - name: Install pandoc
       run: |
         sudo apt-get update
-        sudo apt-get install -y pandoc texlive
+        sudo apt-get install -y pandoc texlive make
 
     - name: Run script
       run: |
-        python ue-mecanique.py
+        make
     
     - name: Upload generated files
       uses: actions/upload-artifact@v2
       with:
         name: generated-files
-        path: out/
+        path: ue-list-website/public
