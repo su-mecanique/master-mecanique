@@ -33,6 +33,7 @@ jobs:
 
     - name: Run script
       run: |
+        git submodule --init update
         make
     
     - name: Upload generated files
