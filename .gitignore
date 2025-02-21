@@ -5,4 +5,8 @@ __pycache__
 .venv
 
 ue-list-website/content
+ue-list-website/public
+ue-list-website/resources
+
 *.lock
+
