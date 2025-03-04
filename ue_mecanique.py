@@ -8,9 +8,37 @@ import os
 import pathlib
 import mimetypes
 import jinja2
-import shutil
 
 from zipfile import ZipFile
+
+
+GENERIC_INFOS = [
+    "title_en",
+    "title_fr",
+    "code",
+    "resp_name",
+    # "resp_mail",  # hide emails
+    "h_cm",
+    "h_td",
+    "h_tp",
+    "h_pr",
+    "ects",
+    "semester",
+    "period",
+    "lang",
+    "public",
+    "where",
+    #   "edt", put as a link (special case)
+]
+
+PEDAGOGICAL_INFOS = [
+    "content_fr",
+    "content_en",
+    "keywords_fr",
+    "keywords_en",
+    "prereq_fr",
+    "prereq_en",
+]
 
 
 def load_excel(
@@ -119,7 +147,8 @@ def render_markdown(template: jinja2.Template, info: dict):
         k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
     }
     return template.render(**info)
-    
+
+
 def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
     "Extract image embeded into an excel file"
     if not is_excel(filename):
@@ -141,35 +170,6 @@ def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
     os.rename(extracted, figure)
     return figure
 
-GENERIC_INFOS = [
-    "title_en",
-    "title_fr",
-    "code",
-    "resp_name",
-    "resp_mail",
-    "h_cm",
-    "h_td",
-    "h_tp",
-    "h_pr",
-    "ects",
-    "semester",
-    "period",
-    "lang",
-    "public",
-    "where",
-    #   "edt", put as a link (special case)
-]
-
-PEDAGOGICAL_INFOS = [
-    "content_fr",
-    "content_en",
-    "keywords_fr",
-    "keywords_en",
-    "prereq_fr",
-    "prereq_en",
-]
-
-# %%
 
 def main():
     "generate a list of UEs"
