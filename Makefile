@@ -2,7 +2,7 @@ WEBSITE_ROOT = ue-list-website
 ROOT = $(WEBSITE_ROOT)/content
 STATIC = $(WEBSITE_ROOT)/static
 CONTENT = $(ROOT)/page
-EXCEL_DIR = src
+EXCEL_DIR = fiches-ue
 
 UE_TEMPLATE = ue_template.jinja2
 UE_FILES = $(wildcard $(EXCEL_DIR)/*.xlsx)
