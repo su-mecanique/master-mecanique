@@ -21,7 +21,6 @@ FIGURES = $(CONTENT)/figures
 
 PDF_FLAGS = --resource-path=$(FIGURES) \
 	-V classoption:DIV=13 \
-	-V fontfamily:libertinus \
 	-V classoption:a4paper \
 	-V documentclass:scrartcl
 
