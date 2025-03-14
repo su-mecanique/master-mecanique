@@ -49,7 +49,7 @@ $(INDEX_MARKDOWN): $(UE_FILES) $(INDEX_TEMPLATE) $(TAG_FILE)
 
 $(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html
 	cp head_custom.html $(THEME)/layouts/partials/head_custom.html
-	$(HUGO) -s $(WEBSITE_ROOT) -d html
+	$(HUGO) --forceSyncStatic -s $(WEBSITE_ROOT) -d html
 
 $(STATIC):
 	mkdir $@
