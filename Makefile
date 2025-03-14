@@ -47,7 +47,7 @@ $(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE)
 $(INDEX_MARKDOWN): $(UE_FILES) $(INDEX_TEMPLATE) $(TAG_FILE)
 	./mkindex -o $@ -t $(INDEX_TEMPLATE) --tags $(TAG_FILE) $(UE_FILES)
 
-$(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html
+$(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html $(UE_PDF)
 	cp head_custom.html $(THEME)/layouts/partials/head_custom.html
 	$(HUGO) --forceSyncStatic -s $(WEBSITE_ROOT) -d html
 
