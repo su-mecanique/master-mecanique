@@ -1,3 +1,6 @@
 [submodule "ue-list-website/themes/hugo-xmin"]
 	path = ue-list-website/themes/hugo-xmin
 	url = https://github.com/yihui/hugo-xmin.git
+[submodule "fiches-ue"]
+	path = fiches-ue
+	url = git@github.com:su-mecanique/fiches-ue-master-mecanique.git
