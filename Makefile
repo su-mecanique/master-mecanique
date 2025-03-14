@@ -51,5 +51,8 @@ $(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html
 	cp head_custom.html $(THEME)/layouts/partials/head_custom.html
 	$(HUGO) -s $(WEBSITE_ROOT) -d html
 
-$(STATIC)/%.pdf: $(CONTENT)/%.md
+$(STATIC):
+	mkdir $@
+
+$(STATIC)/%.pdf: $(CONTENT)/%.md $(STATIC)
 	pandoc $(PDF_FLAGS) -o $@ $<
