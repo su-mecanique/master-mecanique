@@ -14,16 +14,16 @@ date: ""
 # Informations générales
 {% for _, info in GENERIC_INFOS.items() %}
 - **{{ info.tag }}** : {{ info.value }}
-{%- endfor %}
+{% endfor %}
 
 # Informations pédagogiques
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
 - **{{ info.tag }}** : {{ info.value }}
-{%- endfor %}
+{% endfor %}
 - **Bibliographie** :
-{%- for line in biblio.value.split('\n') %}
+{% for line in biblio.value.split('\n') %}
   {{ line }}
-{%- endfor %}
+{% endfor %}
 
 {% if image is defined %}
 ![Figure](../figures/{{ image.value }})

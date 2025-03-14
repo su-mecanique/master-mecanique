@@ -9,7 +9,13 @@ import json
 import os
 
 from zipfile import ZipFile
-from ue_mecanique import load_excel, is_excel, render_markdown, extract_image
+from ue_mecanique import (
+    load_excel,
+    is_excel,
+    render_markdown,
+    extract_excel_image,
+    extract_external_image,
+)
 
 
 def main():
@@ -36,8 +42,14 @@ def main():
 
     # Generating the file
     file = args.file
-    image_file = extract_image(file, args.output_dir)
     info = load_excel(file, comment="#", index_col=0).to_dict()
+
+    if "image" in info and info["image"]["value"] != "":
+        image_file = extract_external_image(file,
+                                            pathlib.Path(info["image"]["value"]),
+                                            args.output_dir)
+    else:
+        image_file = extract_excel_image(file, args.output_dir)
 
     if image_file is not None:
         info["image"] = dict(value=image_file.name)

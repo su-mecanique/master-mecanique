@@ -8,6 +8,7 @@ import os
 import pathlib
 import mimetypes
 import jinja2
+import shutil
 
 from zipfile import ZipFile
 
@@ -149,9 +150,20 @@ def render_markdown(template: jinja2.Template, info: dict):
     return template.render(**info)
 
 
-def extract_image(filename: pathlib.Path, output_dir: pathlib.Path):
+def extract_external_image(filename: pathlib.Path,
+                           image_path: pathlib.Path,
+                           output_dir: pathlib.Path):
+    figure_dir = output_dir / 'figures'
+    figure_dir.mkdir(exist_ok=True)
+
+    figure = filename.parent / 'figures' / image_path
+    shutil.copyfile(figure, figure_dir / image_path)
+    return figure
+
+
+def extract_excel_image(filename: pathlib.Path, output_dir: pathlib.Path):
     "Extract image embeded into an excel file"
-    if not is_excel(filename):
+    if is_excel(filename):
         return
 
     fh = ZipFile(filename)
