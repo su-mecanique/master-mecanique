@@ -52,7 +52,7 @@ $(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html $(UE_PDF) $(STA
 	$(HUGO) --forceSyncStatic -s $(WEBSITE_ROOT) -d html
 
 $(STATIC):
-	mkdir $@
+	mkdir -p $@
 
 $(STATIC)/%.pdf: $(CONTENT)/%.md $(STATIC)
 	pandoc $(PDF_FLAGS) -o $@ $<
