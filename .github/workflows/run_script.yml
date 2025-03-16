@@ -1,6 +1,7 @@
 name: Run UE Mecanique Script
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
