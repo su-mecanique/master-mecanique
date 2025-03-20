@@ -1,10 +1,41 @@
 {
- "UM5MES03": [
-  "fluide",
-  "comp_mech"
- ],
- "UM5MES02": [
-  "solide",
-  "comp_mech"
- ]
+    "TAGS_UE": {
+        "UM5MES03": [
+            "fluide",
+            "comp_mech"
+        ],
+        "UM5MES02": [
+            "solide",
+            "comp_mech"
+        ]
+    },
+
+    "GENERIC_INFOS": [
+        "title_en",
+        "title_fr",
+        "code",
+        "resp_name",
+        "h_cm",
+        "h_td",
+        "h_tp",
+        "h_pr",
+        "ects",
+        "semester",
+        "period",
+        "lang",
+        "public",
+        "where"
+    ],
+
+    "PEDAGOGICAL_INFOS": [
+        "content_fr",
+        "content_en",
+        "keywords_fr",
+        "keywords_en",
+        "prereq_fr",
+        "prereq_en",
+        "eval",
+        "competences_fr",
+        "competences_en"
+    ]
 }

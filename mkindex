@@ -20,7 +20,7 @@ def collect_tags(tags):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Convert excel file to markdown")
+    parser = argparse.ArgumentParser(description="Gather all UE info into a page")
     parser.add_argument("file", nargs="+", type=pathlib.Path)
     parser.add_argument("-o", "--output", type=pathlib.Path, required=True)
     parser.add_argument("-t", "--template", type=pathlib.Path, required=True)

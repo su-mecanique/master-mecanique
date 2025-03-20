@@ -17,6 +17,7 @@ from ue_mecanique import (
     render_markdown,
     extract_excel_image,
     extract_external_image,
+    TAGS_UE,
 )
 
 def get_git_date(file):
@@ -46,8 +47,7 @@ def main():
         template = jinja2.Template(fd.read())
 
     # Reading tags
-    with open(args.tags) as fh:
-        tags = json.load(fh)
+    tags = TAGS_UE
 
     # Generating the file
     file = args.file

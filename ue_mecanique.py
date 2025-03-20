@@ -9,37 +9,26 @@ import pathlib
 import mimetypes
 import jinja2
 import shutil
+import json
+import sys
 
 from zipfile import ZipFile
 
 
-GENERIC_INFOS = [
-    "title_en",
-    "title_fr",
-    "code",
-    "resp_name",
-    # "resp_mail",  # hide emails
-    "h_cm",
-    "h_td",
-    "h_tp",
-    "h_pr",
-    "ects",
-    "semester",
-    "period",
-    "lang",
-    "public",
-    "where",
-    #   "edt", put as a link (special case)
-]
+if not os.path.isfile("tags.json"):
+    print("tags.json does not exist", file=sys.stderr)
+    sys.exit(1)
 
-PEDAGOGICAL_INFOS = [
-    "content_fr",
-    "content_en",
-    "keywords_fr",
-    "keywords_en",
-    "prereq_fr",
-    "prereq_en",
-]
+with open("tags.json") as fh:
+    TAGS = json.load(fh)
+
+if (not "TAGS_UE" in TAGS) or (not "GENERIC_INFOS" in TAGS) or (not "PEDAGOGICAL_INFOS" in TAGS):
+    print("tags.json is missing essential information", file=sys.stderr)
+    sys.exit(1)
+
+GENERIC_INFOS = TAGS["GENERIC_INFOS"]
+PEDAGOGICAL_INFOS = TAGS["PEDAGOGICAL_INFOS"]
+TAGS_UE = TAGS["TAGS_UE"]
 
 
 def load_excel(
