@@ -19,6 +19,9 @@ menu:
     - name: Liste des UE
       url: "page/"
       weight: 2
+    - name: Modalités d'évaluations
+      url: "mcc/"
+      weight: 3
 
 params:
   description: ""

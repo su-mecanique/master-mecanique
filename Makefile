@@ -1,10 +1,10 @@
 # Important directories
-EXCEL_DIR = fiches-ue            # Source of excel files
-WEBSITE_ROOT = ue-list-website   # Root of website directory tree
-ROOT = $(WEBSITE_ROOT)/content   # Serves as target dir for markdown files
-STATIC = $(WEBSITE_ROOT)/static  # Serves as target dir for pdf files
-CONTENT = $(ROOT)/page           # Dir for individual UE MD files
-FIGURES = $(CONTENT)/figures     # Target dir for image files
+EXCEL_DIR = fiches-ue
+WEBSITE_ROOT = ue-list-website
+ROOT = $(WEBSITE_ROOT)/content
+STATIC = $(WEBSITE_ROOT)/static
+CONTENT = $(ROOT)/page
+FIGURES = $(CONTENT)/figures
 
 #-------------------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ PDF_FLAGS = --resource-path=$(FIGURES) \
 .PHONY: clean markdown pdf html
 
 # Shorthand targets
-all: markdown html pdf
+all: html pdf markdown
 html: $(INDEX_HTML)
 markdown: $(UE_MARKDOWN) $(INDEX_MARKDOWN) $(MCC_MARKDOWN)
 pdf: $(UE_PDF) $(STATIC)/catalog.pdf
@@ -62,7 +62,7 @@ clean:
 $(CONTENT):
 	mkdir -p $(CONTENT)
 $(STATIC):
-	mkdir -p $@
+	mkdir -p $(STATIC)
 
 
 # Make individual UE markdown files
@@ -79,7 +79,7 @@ $(MCC_MARKDOWN): $(UE_FILES) $(MCC_TEMPLATE) $(TAG_FILE)
 
 
 # Generate html website
-$(INDEX_HTML): $(UE_MARKDOWN) $(INDEX_MARKDOWN) head_custom.html $(UE_PDF) $(STATIC)/catalog.pdf
+$(INDEX_HTML): markdown head_custom.html $(UE_PDF) $(STATIC)/catalog.pdf
 	cp head_custom.html $(THEME)/layouts/partials/head_custom.html
 	$(HUGO) --forceSyncStatic -s $(WEBSITE_ROOT) -d html
 

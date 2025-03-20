@@ -9,7 +9,7 @@ import json
 import os
 
 from zipfile import ZipFile
-from ue_mecanique import load_excel, render_markdown
+from ue_mecanique import load_excel, render_markdown, TAGS_UE
 
 
 def collect_tags(tags):
@@ -34,8 +34,7 @@ def main():
 
     collected_infos = {"UE_codes": {}}
 
-    with open(args.tags, 'r') as fh:
-        tags = json.load(fh)
+    tags = TAGS_UE
 
     collected_infos["tags"] = collect_tags(tags)
 
