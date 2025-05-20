@@ -64,7 +64,7 @@ def main():
     if image_file is not None:
         info["image"] = dict(value=image_file.name)
 
-    info["tags"] = tags[file.stem]
+    info["tags"] = tags.get(file.stem, [])
     markdown = render_markdown(template, info)
     out_file = args.output_dir / (file.stem + ".md")
 
