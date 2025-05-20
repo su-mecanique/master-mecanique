@@ -10,7 +10,7 @@ FIGURES = $(CONTENT)/figures
 
 # Variables that generate files from UE xlsx references
 UE_TEMPLATE = ue_template.jinja2
-UE_FILES = $(wildcard $(EXCEL_DIR)/*.xlsx)
+UE_FILES = $(wildcard $(EXCEL_DIR)/U*.xlsx)
 UE_MARKDOWN = $(patsubst %.xlsx,%.md,$(subst $(EXCEL_DIR),$(CONTENT),$(UE_FILES)))
 UE_PDF = $(patsubst %.xlsx,%.pdf,$(subst $(EXCEL_DIR),$(STATIC),$(UE_FILES)))
 
