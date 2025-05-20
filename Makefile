@@ -9,7 +9,7 @@ FIGURES = $(CONTENT)/figures
 #-------------------------------------------------------------------------------------------
 
 # Variables that generate files from UE xlsx references
-UE_TEMPLATE = ue_template.jinja2
+UE_TEMPLATE = templates/ue_template.jinja2
 UE_FILES = $(wildcard $(EXCEL_DIR)/U*.xlsx)
 UE_MARKDOWN = $(patsubst %.xlsx,%.md,$(subst $(EXCEL_DIR),$(CONTENT),$(UE_FILES)))
 UE_PDF = $(patsubst %.xlsx,%.pdf,$(subst $(EXCEL_DIR),$(STATIC),$(UE_FILES)))
@@ -20,11 +20,11 @@ TAG_FILE = tags.json
 #-------------------------------------------------------------------------------------------
 
 # Index page
-INDEX_TEMPLATE = index_template.jinja2
+INDEX_TEMPLATE = templates/index_template.jinja2
 INDEX_MARKDOWN = $(ROOT)/_index.md
 
 # Evaluations page
-MCC_TEMPLATE = mcc_template.jinja2
+MCC_TEMPLATE = templates/mcc_template.jinja2
 MCC_MARKDOWN = $(ROOT)/mcc.md
 
 #-------------------------------------------------------------------------------------------
