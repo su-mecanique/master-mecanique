@@ -20,10 +20,12 @@ date: "{{ modified_date }}"
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
 - **{{ info.tag }}** : {{ info.value }}
 {% endfor %}
+{% if references is defined %}
 - **Bibliographie** :
 {% for line in references.value.split('\n') %}
   {{ line }}
 {% endfor %}
+{% endif %}
 
 {% if image is defined %}
 ![Figure](../figures/{{ image.value }})

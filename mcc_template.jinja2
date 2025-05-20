@@ -2,6 +2,13 @@
 
 {% for ue_code, info in UE_codes.items() %}
 ### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{% if info.eval_fr is defined %}
 {{ info.eval_fr.value }}
+{% endif %}
+{% if info.eval_en is defined %}
 {{ info.eval_en.value }}
+{% endif %}
+{% if info.eval_fr is not defined and info.eval_en is not defined %}
+N/A
+{% endif %}
 {%- endfor %}
