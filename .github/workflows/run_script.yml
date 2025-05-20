@@ -19,6 +19,11 @@ jobs:
       with:
         submodules: 'true'
         fetch-depth: 0
+        lfs: true
+
+    # https://stackoverflow.com/questions/61463578/github-actions-actions-checkoutv2-lfs-true-flag-not-converting-pointers-to-act#61466160
+    - name: Checkout LFS objects
+      run: git lfs checkout
 
     - name: Set up Python
       uses: actions/setup-python@v2
