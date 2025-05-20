@@ -2,5 +2,6 @@
 
 {% for ue_code, info in UE_codes.items() %}
 ### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
-{{ info.eval.value }}
+{{ info.eval_fr.value }}
+{{ info.eval_en.value }}
 {%- endfor %}

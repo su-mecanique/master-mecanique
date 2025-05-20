@@ -21,7 +21,7 @@ date: "{{ modified_date }}"
 - **{{ info.tag }}** : {{ info.value }}
 {% endfor %}
 - **Bibliographie** :
-{% for line in biblio.value.split('\n') %}
+{% for line in references.value.split('\n') %}
   {{ line }}
 {% endfor %}
 

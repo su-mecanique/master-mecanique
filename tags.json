@@ -20,11 +20,15 @@
         "h_tp",
         "h_pr",
         "ects",
-        "semester",
-        "period",
-        "lang",
+        "semester_en",
+        "semester_fr",
+        "period_fr",
+        "period_en",
+        "lang_fr",
+        "lang_en",
         "public",
-        "where"
+        "where",
+        "edt"
     ],
 
     "PEDAGOGICAL_INFOS": [
@@ -34,7 +38,8 @@
         "keywords_en",
         "prereq_fr",
         "prereq_en",
-        "eval",
+        "eval_fr",
+        "eval_en",
         "competences_fr",
         "competences_en"
     ]

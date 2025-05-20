@@ -39,7 +39,7 @@ def load_excel(
         filename,
         sheet_name=tab,
         engine="openpyxl",
-        usecols=[0, 1, 2],
+        usecols=[0, 1, 3],
         **kwargs,
     )
     df = df.where(pd.notnull(df), None)
