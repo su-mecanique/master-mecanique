@@ -18,15 +18,18 @@ date: "{{ modified_date }}"
 
 # Informations pédagogiques
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
-- **{{ info.tag }}** : {{ info.value }}
+## {{ info.tag }}
+{{ info.value | replace('#', '##') }}
 {% endfor %}
 {% if references is defined %}
-- **Bibliographie** :
+## Bibliographie
 {% for line in references.value.split('\n') %}
-  {{ line }}
+  {{ line | replace('#', '') }}
 {% endfor %}
 {% endif %}
 
 {% if image is defined %}
 ![Figure](../figures/{{ image.value }})
 {% endif %}
+
+[*Version PDF*]({{ ue_code }}.pdf)
