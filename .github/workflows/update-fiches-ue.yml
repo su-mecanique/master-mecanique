@@ -1,0 +1,26 @@
+name: Update Fiches UE
+
+on: [workflow_dispatch]
+
+jobs:
+  update_fiches-ue_submodule:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      name: Checkout repository with submodules
+      with:
+        submodules: 'true'
+        fetch-depth: 0
+        lfs: true
+
+    - name: Update fiches-ue submodule
+      run: |
+        cd fiches-ue
+        git pull && git checkout main
+
+    # Auto-commit changed files
+    - name: Auto-commit
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "updated fiches-ue submodule version"
+        commit_user_name: ${{ github.actor }}
