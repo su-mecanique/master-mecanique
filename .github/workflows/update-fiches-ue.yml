@@ -16,7 +16,7 @@ jobs:
     - name: Update fiches-ue submodule
       run: |
         cd fiches-ue
-        git pull && git checkout main
+        git checkout main && git pull origin main
 
     # Auto-commit changed files
     - name: Auto-commit
