@@ -11,6 +11,7 @@ import jinja2
 import shutil
 import json
 import sys
+import tomllib
 
 from zipfile import ZipFile
 
@@ -22,13 +23,75 @@ if not os.path.isfile("tags.json"):
 with open("tags.json") as fh:
     TAGS = json.load(fh)
 
-if (not "TAGS_UE" in TAGS) or (not "GENERIC_INFOS" in TAGS) or (not "PEDAGOGICAL_INFOS" in TAGS):
+# Load UE tags
+with open("listes_ue.toml", "rb") as fh:
+    ue_data = tomllib.load(fh)
+
+
+if (not "GENERIC_INFOS" in TAGS) or (not "PEDAGOGICAL_INFOS" in TAGS):
     print("tags.json is missing essential information", file=sys.stderr)
     sys.exit(1)
 
+
+def access_nested(key, data):
+    """Access dictionary with key.subkey.subsubkey"""
+    keys = key.split(".")
+    val = data
+
+    for k in keys:
+        val = val[k]
+    return val
+
+def collect_tags(ue_lists, keys, depth, max_depth):
+    """Collect all keys in nested dictionary"""
+    if depth == max_depth:
+        return keys
+
+    sub_keys = []
+    for key in keys:
+        node_data = access_nested(key, ue_lists)
+
+        # If leaf_data is not a dict, we have a leaf
+        if not isinstance(node_data, dict):
+            sub_keys += [key]
+        else:
+            sub_keys += [key + "." + k for k in node_data.keys()]
+
+    return collect_tags(ue_lists, sub_keys, depth + 1, max_depth)
+
+def flatten(nodes, values):
+    if len(nodes) == 0:
+        return values
+
+    sub_nodes = []
+    for d in nodes:
+        if isinstance(d, dict):
+            sub_nodes += list(d.values())
+        elif isinstance(d, list):
+            values += d
+
+
+    return flatten(sub_nodes, values)
+
+
+def reverse_tags_ue(ue_lists, depth=0):
+    """For a list of UE codes per track, return tracks per UE code"""
+    all_tags = collect_tags(ue_lists, ue_lists.keys(), 0, depth)
+    all_ue = {key: set() for key in set(flatten([ue_lists], []))}
+    tag2list = {
+        tag: flatten([access_nested(tag, ue_lists)], []) for tag in all_tags
+    }
+
+    for k, ue_list in tag2list.items():
+        for ue in ue_list:
+            all_ue[ue].add(k)
+
+    return all_ue
+
+
 GENERIC_INFOS = TAGS["GENERIC_INFOS"]
 PEDAGOGICAL_INFOS = TAGS["PEDAGOGICAL_INFOS"]
-TAGS_UE = TAGS["TAGS_UE"]
+TAGS_UE = reverse_tags_ue(ue_data, 0)
 
 
 def load_excel(
@@ -226,7 +289,3 @@ def main():
             file.write(
                 f" - [{ue_df['code']['value']} - {ue_df['title_fr']['value']} ({ue_df['title_en']['value']})]({ue_df['md_file']['value']}). Résp. {ue_df['resp_name']['value']}. {ue_df['content_en']['value']} \n "
             )
-
-
-if __name__ == "__main__":
-    main()
