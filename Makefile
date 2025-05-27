@@ -15,7 +15,8 @@ UE_MARKDOWN = $(patsubst %.xlsx,%.md,$(subst $(EXCEL_DIR),$(CONTENT),$(UE_FILES)
 UE_PDF = $(patsubst %.xlsx,%.pdf,$(subst $(EXCEL_DIR),$(STATIC),$(UE_FILES)))
 
 # Tags database
-TAG_FILE = tags.json
+TAG_FILE = tags.toml
+LIST_UE = listes_ue.toml
 
 #-------------------------------------------------------------------------------------------
 
@@ -66,16 +67,19 @@ $(STATIC):
 
 
 # Make individual UE markdown files
-$(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE)
-	./xlsx2md --output-dir $(CONTENT) --template $(UE_TEMPLATE) --tags $(TAG_FILE) $<
+$(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE) $(LIST_UE)
+	./xlsx2md \
+		--output-dir $(CONTENT) \
+		--template $(UE_TEMPLATE) \
+		--tags $(TAG_FILE) --list-ue $(LIST_UE) $<
 
 # Make index page
-$(INDEX_MARKDOWN): $(UE_FILES) $(INDEX_TEMPLATE) $(TAG_FILE)
-	./mkindex -o $@ -t $(INDEX_TEMPLATE) --tags $(TAG_FILE) $(UE_FILES)
+$(INDEX_MARKDOWN): $(UE_FILES) $(INDEX_TEMPLATE) $(TAG_FILE) $(LIST_UE)
+	./mkindex -o $@ -t $(INDEX_TEMPLATE) --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
 
 # Make MCC page
-$(MCC_MARKDOWN): $(UE_FILES) $(MCC_TEMPLATE) $(TAG_FILE)
-	./mkindex -o $@ -t $(MCC_TEMPLATE) --tags $(TAG_FILE) $(UE_FILES)
+$(MCC_MARKDOWN): $(UE_FILES) $(MCC_TEMPLATE) $(TAG_FILE) $(LIST_UE)
+	./mkindex -o $@ -t $(MCC_TEMPLATE) --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
 
 
 # Generate html website

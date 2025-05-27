@@ -17,7 +17,7 @@ from ue_mecanique import (
     render_markdown,
     extract_excel_image,
     extract_external_image,
-    TAGS_UE,
+    load_codes_ue,
 )
 
 def get_git_date(file):
@@ -36,6 +36,7 @@ def main():
     parser.add_argument("-o", "--output-dir", type=pathlib.Path, required=True)
     parser.add_argument("-t", "--template", type=pathlib.Path, required=True)
     parser.add_argument("--tags", type=pathlib.Path, required=True)
+    parser.add_argument("--list-ue", type=pathlib.Path, required=True)
 
     args = parser.parse_args()
 
@@ -47,13 +48,15 @@ def main():
         template = jinja2.Template(fd.read())
 
     # Reading tags
-    tags = TAGS_UE
+    tags = load_codes_ue(args.list_ue)
 
     # Generating the file
     file = args.file
     info = load_excel(file, comment="#", index_col=0).to_dict()
-    info['modified_date'] = get_git_date(file)
-    info['code']['value'] = file.stem  # correcting UE code
+    info["modified_date"] = get_git_date(file)
+    info["code"] = {
+        "value": file.stem,
+    }
 
     if False and ("image" in info) and (info["image"]["value"] != ""):
         image_file = extract_external_image(
@@ -66,7 +69,7 @@ def main():
         info["image"] = dict(value=image_file.name)
 
     info["tags"] = tags.get(file.stem, ["orpheline"])
-    markdown = render_markdown(template, info)
+    markdown = render_markdown(template, info, args.tags)
     out_file = args.output_dir / (file.stem + ".md")
 
     with open(out_file, "w") as fd:

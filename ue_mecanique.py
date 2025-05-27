@@ -16,23 +16,6 @@ import tomllib
 from zipfile import ZipFile
 
 
-if not os.path.isfile("tags.json"):
-    print("tags.json does not exist", file=sys.stderr)
-    sys.exit(1)
-
-with open("tags.json") as fh:
-    TAGS = json.load(fh)
-
-# Load UE tags
-with open("listes_ue.toml", "rb") as fh:
-    ue_data = tomllib.load(fh)
-
-
-if (not "GENERIC_INFOS" in TAGS) or (not "PEDAGOGICAL_INFOS" in TAGS):
-    print("tags.json is missing essential information", file=sys.stderr)
-    sys.exit(1)
-
-
 def access_nested(key, data):
     """Access dictionary with key.subkey.subsubkey"""
     keys = key.split(".")
@@ -41,6 +24,7 @@ def access_nested(key, data):
     for k in keys:
         val = val[k]
     return val
+
 
 def collect_tags(ue_lists, keys, depth, max_depth):
     """Collect all keys in nested dictionary"""
@@ -58,6 +42,7 @@ def collect_tags(ue_lists, keys, depth, max_depth):
             sub_keys += [key + "." + k for k in node_data.keys()]
 
     return collect_tags(ue_lists, sub_keys, depth + 1, max_depth)
+
 
 def flatten(nodes, values):
     if len(nodes) == 0:
@@ -89,9 +74,10 @@ def reverse_tags_ue(ue_lists, depth=0):
     return all_ue
 
 
-GENERIC_INFOS = TAGS["GENERIC_INFOS"]
-PEDAGOGICAL_INFOS = TAGS["PEDAGOGICAL_INFOS"]
-TAGS_UE = reverse_tags_ue(ue_data, 0)
+def load_codes_ue(ue_list_file: str):
+    "Load list of all UE codes"
+    with open(ue_list_file, "rb") as fh:
+        return reverse_tags_ue(tomllib.load(fh), 0)
 
 
 def load_excel(
@@ -193,12 +179,23 @@ def is_excel(path: pathlib.Path):
     return mime == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
-def render_markdown(template: jinja2.Template, info: dict):
+def render_markdown(template: jinja2.Template, info: dict, tag_file: str):
     "Render dict to a markdown file"
+    with open(tag_file, "rb") as fh:
+        TAGS = tomllib.load(fh)
+
+    if (not "GENERIC_INFOS" in TAGS) or (not "PEDAGOGICAL_INFOS" in TAGS):
+        print(f"{tag_file} is missing essential information", file=sys.stderr)
+        sys.exit(1)
+
+    GENERIC_INFOS = TAGS["GENERIC_INFOS"]
+    PEDAGOGICAL_INFOS = TAGS["PEDAGOGICAL_INFOS"]
+
     info["GENERIC_INFOS"] = {k: v for k, v in info.items() if k in GENERIC_INFOS}
     info["PEDAGOGICAL_INFOS"] = {
         k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
     }
+    info["TAG_TITLES"] = TAGS["TAG_TITLES"]
     return template.render(**info)
 
 
