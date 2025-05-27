@@ -1,0 +1,67 @@
+GENERIC_INFOS = [
+    "title_en",
+    "title_fr",
+    "code",
+    "resp_name",
+    "h_cm",
+    "h_td",
+    "h_tp",
+    "h_pr",
+    "ects",
+    "semester_en",
+    "semester_fr",
+    "period_fr",
+    "period_en",
+    "lang_fr",
+    "lang_en",
+    "public",
+    "where",
+    "edt",
+]
+
+PEDAGOGICAL_INFOS = [
+    "content_fr",
+    "content_en",
+    "keywords_fr",
+    "keywords_en",
+    "prereq_fr",
+    "prereq_en",
+    "eval_fr",
+    "eval_en",
+    "competences_fr",
+    "competences_en"
+]
+
+[TAG_TITLES]
+title_en = "Title (EN)"
+title_fr = "Titre (FR)"
+code = "Code de l'UE"
+writer_name = "Nom du rédacteur de la fiche"
+resp_name = "Nom du responsable de l'UE"
+resp_mail = "Mail du responsable de l’UE"
+h_cm = "Nombre d'heures de cours / Amount of class hours"
+h_td = "Volume h TD / Amount of exercise hours"
+h_tp = "Volume h TP / Amount of practical work hours"
+h_pr = "Volume h Projet / Amount of project hours"
+ects = "ECTS"
+semester_fr = "Semestre"
+semester_en = "Semester"
+period_fr = "Periode (pour les cours M2)"
+period_en = "Quarter (for M2 classes)"
+lang_fr = "Langue"
+lang_en = "Language"
+where = "Localisation"
+edt = "Lien vers l'emploi du temps  / trad en"
+content_fr = "Contenu (FR)"
+content_en = "Content (EN)"
+keywords_fr = "Mots clés (FR)"
+keywords_en = "Keywords (EN)"
+prereq_fr = "Préréquis (FR)"
+prereq_en = "Pre-requisites (EN)"
+eval_fr = "Modalité d'evaluation"
+eval_en = "Assessment "
+references = "Références / References"
+competences_fr = "Acquis d'Apprentissage Visés"
+competences_en = "Learning outcomes"
+other = "Autres / Other"
+image = "Illustration"
