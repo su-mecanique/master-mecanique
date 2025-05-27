@@ -1,5 +1,5 @@
 # Important directories
-EXCEL_DIR = fiches-ue
+EXCEL_DIR = fiches-ue/fiches
 WEBSITE_ROOT = ue-list-website
 ROOT = $(WEBSITE_ROOT)/content
 STATIC = $(WEBSITE_ROOT)/static
