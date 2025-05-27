@@ -55,10 +55,10 @@ def main():
     info['modified_date'] = get_git_date(file)
     info['code']['value'] = file.stem  # correcting UE code
 
-    if "image" in info and info["image"]["value"] != "":
-        image_file = extract_external_image(file,
-                                            pathlib.Path(info["image"]["value"]),
-                                            args.output_dir)
+    if False and ("image" in info) and (info["image"]["value"] != ""):
+        image_file = extract_external_image(
+            file, pathlib.Path(info["image"]["value"]), args.output_dir
+        )
     else:
         image_file = extract_excel_image(file, args.output_dir)
 
