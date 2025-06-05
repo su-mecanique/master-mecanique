@@ -10,7 +10,9 @@ FIGURES = $(CONTENT)/figures
 
 # Variables that generate files from UE xlsx references
 UE_TEMPLATE = templates/ue_template.jinja2
-UE_FILES = $(wildcard $(EXCEL_DIR)/U*.xlsx)
+TEMPLATE_SHA1 = 8451e35efe7632bd1888ce9ce2f4713a4f8159ad
+# Filter out all files identical to template
+UE_FILES = $(shell sha1sum $(EXCEL_DIR)/U*.xlsx | grep -v $(TEMPLATE_SHA1) | awk '{print $$2}')
 UE_MARKDOWN = $(patsubst %.xlsx,%.md,$(subst $(EXCEL_DIR),$(CONTENT),$(UE_FILES)))
 UE_PDF = $(patsubst %.xlsx,%.pdf,$(subst $(EXCEL_DIR),$(STATIC),$(UE_FILES)))
 
