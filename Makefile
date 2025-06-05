@@ -42,7 +42,8 @@ INDEX_HTML = $(WEBSITE_ROOT)/html/index.html
 PDF_FLAGS = --resource-path=$(FIGURES) \
 	-V classoption:DIV=13 \
 	-V classoption:a4paper \
-	-V documentclass:scrartcl
+	-V documentclass:scrartcl \
+	--pdf-engine lualatex
 
 #-------------------------------------------------------------------------------------------
 
