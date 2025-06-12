@@ -196,6 +196,9 @@ def render_markdown(template: jinja2.Template, info: dict, tag_file: str):
         k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
     }
     info["TAG_TITLES"] = TAGS["TAG_TITLES"]
+
+    # Filter out invalid keys
+    info = {k: v for k, v in info.items() if isinstance(k, str)}
     return template.render(**info)
 
 
