@@ -1,17 +1,17 @@
 ---
-{% if title_fr is defined and title_en is defined %}
+{%- if title_fr is defined and title_en is defined %}
 title: "{{ code.value }} -- {{ title_fr.value }} ({{ title_en.value }})"
-{% else %}
+{%- else %}
 title: "{{ code.value }} -- TITRE À REMPLIR OBLIGATOIREMENT !"
-{% endif %}
-{% if resp_name is defined %}
+{%- endif %}
+{%- if resp_name is defined %}
 author: "{{ resp_name.value }}"
-{% else %}
+{%- else %}
 author: "RESPONSABLE À REMPLIR OBLIGATOIREMENT"
-{% endif %}
-{% if image is defined %}
+{%- endif %}
+{%- if image is defined %}
 image: "figures/{{ image.value }}"
-{% endif %}
+{%- endif %}
 tags:
 {% for tag in tags %}
    - {{ tag }}
