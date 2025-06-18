@@ -16,7 +16,7 @@
 {% endif %}
 
 {% if info.resp_name is defined %}
-*Responsable(s) : {{ info.resp_name.value }}*
+*Responsable(s) : {{ info.resp_name.value | trim }}*
 {% else %}
 *Responsable(s) : RESPONSABLE À REMPLIR OBLIGATOIREMENT*
 {% endif %}
