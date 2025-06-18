@@ -12,8 +12,13 @@ import shutil
 import json
 import sys
 import tomllib
+import logging
 
 from zipfile import ZipFile
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.WARNING)
 
 
 def access_nested(key, data):
@@ -196,6 +201,11 @@ def render_markdown(template: jinja2.Template, info: dict, tag_file: str):
         k: v for k, v, in info.items() if k in PEDAGOGICAL_INFOS
     }
     info["TAG_TITLES"] = TAGS["TAG_TITLES"]
+
+    invalid_keys = [k for k in info.keys() if not isinstance(k, str)]
+
+    if len(invalid_keys) != 0:
+        logger.warning(f"found has invalid keys")
 
     # Filter out invalid keys
     info = {k: v for k, v in info.items() if isinstance(k, str)}
