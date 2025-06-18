@@ -13,6 +13,7 @@ import json
 import sys
 import tomllib
 import logging
+import warnings
 
 from zipfile import ZipFile
 
@@ -89,13 +90,15 @@ def load_excel(
     filename: str, path: str = os.getcwd(), tab: int = 0, **kwargs
 ) -> pd.DataFrame:
     """Load a tab of an excel file."""
-    df = pd.read_excel(
-        filename,
-        sheet_name=tab,
-        engine="openpyxl",
-        usecols=[0, 1, 3],
-        **kwargs,
-    )
+    with warnings.catch_warnings(action='ignore', category=UserWarning):
+        df = pd.read_excel(
+            filename,
+            sheet_name=tab,
+            engine="openpyxl",
+            usecols=[0, 1, 3],
+            **kwargs,
+        )
+
     df = df.where(pd.notnull(df), None)
     # reverse rows and columns
     df = df.dropna().transpose()
@@ -205,7 +208,8 @@ def render_markdown(template: jinja2.Template, info: dict, tag_file: str):
     invalid_keys = [k for k in info.keys() if not isinstance(k, str)]
 
     if len(invalid_keys) != 0:
-        logger.warning(f"found has invalid keys")
+        if 'code' in info:
+            logger.warning(f"{info['code']['value']} has invalid keys")
 
     # Filter out invalid keys
     info = {k: v for k, v in info.items() if isinstance(k, str)}
