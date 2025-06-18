@@ -229,7 +229,7 @@ def extract_external_image(filename: pathlib.Path,
 
 def extract_excel_image(filename: pathlib.Path, output_dir: pathlib.Path):
     "Extract image embeded into an excel file"
-    if is_excel(filename):
+    if not is_excel(filename):
         return
 
     fh = ZipFile(filename)
