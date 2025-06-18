@@ -1,7 +1,12 @@
 # Liste des modalites d'évaluation par UE
 
 {% for ue_code, info in UE_codes.items() %}
+{% if info.title_fr is defined and info.title_en is defined %}
 ### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{% else %}
+### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{% endif %}
+
 {% if info.eval_fr is defined %}
 {{ info.eval_fr.value }}
 {% endif %}
