@@ -30,7 +30,7 @@ date: "{{ modified_date }}"
 # Informations pédagogiques
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
 ## {{ info.tag }}
-{{ info.value | replace('#', '##') }}
+{{ info.value | replace('# ', '### ') }}
 {% endfor %}
 {% if references is defined %}
 ## Bibliographie
