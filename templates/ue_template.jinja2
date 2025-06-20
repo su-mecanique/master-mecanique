@@ -20,9 +20,12 @@ date: "{{ modified_date }}"
 ---
 
 # Informations générales
-{% for key, info in GENERIC_INFOS.items() %}
-- **{{ TAG_TITLES[key] }}** : {{ info.value }}
-{% endfor %}
+
+|         |          |
+| ------- | -------- |
+{%- for key, info in GENERIC_INFOS.items() %}
+| **{{ TAG_TITLES[key] }}** | {{ info.value }} |
+{%- endfor %}
 
 # Informations pédagogiques
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
