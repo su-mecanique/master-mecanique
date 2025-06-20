@@ -39,11 +39,13 @@ THEME_PATCH = theme.patch
 INDEX_HTML = $(WEBSITE_ROOT)/html/index.html
 
 # Variables for pdf generation
+PDF_VARIABLES = pandoc_variables.yml
 PDF_FLAGS = --resource-path=$(FIGURES) \
 	-V classoption:DIV=13 \
 	-V classoption:a4paper \
 	-V documentclass:scrartcl \
-	--pdf-engine lualatex
+	--pdf-engine xelatex \
+	--defaults $(PDF_VARIABLES)
 
 #-------------------------------------------------------------------------------------------
 
@@ -92,7 +94,7 @@ $(INDEX_HTML): markdown head_custom.html $(UE_PDF) $(STATIC)/catalog.pdf
 
 
 # Make individual pdf files
-$(STATIC)/%.pdf: $(CONTENT)/%.md $(STATIC)
+$(STATIC)/%.pdf: $(CONTENT)/%.md $(STATIC) $(PDF_VARIABLES)
 	pandoc $(PDF_FLAGS) -o $@ $<
 
 # Compile to a single pdf

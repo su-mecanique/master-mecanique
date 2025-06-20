@@ -1,0 +1,8 @@
+---
+variables:
+  classoption: [DIV=13]
+  mainfont: TeX Gyre Pagella
+  sansfont: TeX Gyre Heros
+  sansfontoptions:
+    - Color=00374F
+  colorlinks: true
