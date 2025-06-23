@@ -49,7 +49,7 @@ PDF_FLAGS = --resource-path=$(FIGURES) \
 
 #-------------------------------------------------------------------------------------------
 
-.PHONY: clean markdown pdf html
+.PHONY: clean markdown pdf html serve
 
 # Shorthand targets
 all: html pdf markdown
@@ -101,3 +101,8 @@ $(STATIC)/%.pdf: $(CONTENT)/%.md $(STATIC) $(PDF_VARIABLES)
 # Compile to a single pdf
 $(STATIC)/catalog.pdf: $(UE_PDF)
 	pdftk $(UE_PDF) cat output $@
+
+
+# Launch server
+serve:
+	hugo -s ue-list-website --forceSyncStatic -D server
