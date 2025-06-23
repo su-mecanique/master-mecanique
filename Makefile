@@ -67,6 +67,7 @@ clean:
 # Necessary folders
 $(CONTENT):
 	mkdir -p $(CONTENT)
+	mkdir -p $(CONTENT)/figures
 $(STATIC):
 	mkdir -p $(STATIC)
 
