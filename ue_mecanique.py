@@ -246,6 +246,11 @@ def extract_excel_image(filename: pathlib.Path, output_dir: pathlib.Path):
     figure = figure_dir / (filename.stem + image.suffix)
     extracted = fh.extract(str(image))
     os.rename(extracted, figure)
+
+    mime = mimetypes.guess_type(figure.absolute().as_uri())[0]
+    if mime not in ('image/png', 'image/svg+xml', 'image/jpeg'):
+        return
+
     return figure
 
 
