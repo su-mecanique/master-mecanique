@@ -44,6 +44,5 @@ make
 If you want to have a web-server that automatically updates:
 
 ```
-cd ue-list-website
-hugo --forceSyncStatic -D server
+make serve
 ```
