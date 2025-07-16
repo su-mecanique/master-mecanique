@@ -3,4 +3,4 @@
 	url = https://github.com/yihui/hugo-xmin.git
 [submodule "fiches-ue"]
 	path = fiches-ue
-	url = git@github.com:su-mecanique/fiches-ue-master-mecanique.git
+	url = https://github.com/su-mecanique/fiches-ue-master-mecanique.git
