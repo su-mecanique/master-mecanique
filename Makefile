@@ -90,6 +90,7 @@ $(MCC_MARKDOWN): $(UE_FILES) $(MCC_TEMPLATE) $(TAG_FILE) $(LIST_UE)
 
 # Generate html website
 $(INDEX_HTML): markdown head_custom.html $(UE_PDF) $(STATIC)/catalog.pdf
+	mkdir -p $(THEME)/layouts/partials
 	cp head_custom.html $(THEME)/layouts/partials/head_custom.html
 	$(HUGO) --forceSyncStatic -s $(WEBSITE_ROOT) -d html
 
