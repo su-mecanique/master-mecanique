@@ -22,16 +22,6 @@ LIST_UE = listes_ue.toml
 
 #-------------------------------------------------------------------------------------------
 
-# Index page
-INDEX_TEMPLATE = templates/index_template.jinja2
-INDEX_MARKDOWN = $(ROOT)/_index.md
-
-# Evaluations page
-MCC_TEMPLATE = templates/mcc_template.jinja2
-MCC_MARKDOWN = $(ROOT)/mcc.md
-
-#-------------------------------------------------------------------------------------------
-
 # Variables for html generation
 HUGO = hugo
 THEME = $(WEBSITE_ROOT)/themes/hugo-xmin
@@ -54,7 +44,7 @@ PDF_FLAGS = --resource-path=$(FIGURES) \
 # Shorthand targets
 all: html pdf markdown
 html: $(INDEX_HTML)
-markdown: $(UE_MARKDOWN) $(INDEX_MARKDOWN) $(MCC_MARKDOWN)
+markdown: $(UE_MARKDOWN) $(ROOT)/_index.md $(ROOT)/mcc.md $(ROOT)/solides.md
 pdf: $(UE_PDF) $(STATIC)/catalog.pdf
 
 
@@ -79,14 +69,9 @@ $(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE) $(LIS
 		--template $(UE_TEMPLATE) \
 		--tags $(TAG_FILE) --list-ue $(LIST_UE) $<
 
-# Make index page
-$(INDEX_MARKDOWN): $(UE_FILES) $(INDEX_TEMPLATE) $(TAG_FILE) $(LIST_UE)
-	./mkindex -o $@ -t $(INDEX_TEMPLATE) --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
-
-# Make MCC page
-$(MCC_MARKDOWN): $(UE_FILES) $(MCC_TEMPLATE) $(TAG_FILE) $(LIST_UE)
-	./mkindex -o $@ -t $(MCC_TEMPLATE) --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
-
+# Generic rule to make index pages
+$(ROOT)/%.md: templates/%.jinja2 $(UE_FILES) $(TAG_FILE) $(LIST_UE) mkindex
+	./mkindex -o $@ -t $< --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
 
 # Generate html website
 $(INDEX_HTML): markdown head_custom.html $(UE_PDF) $(STATIC)/catalog.pdf

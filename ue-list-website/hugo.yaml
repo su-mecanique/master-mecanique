@@ -22,6 +22,9 @@ menu:
     - name: Modalités d'évaluations
       url: "mcc/"
       weight: 3
+    - name: Solides
+      url: "solides/"
+      weight: 4
 
 params:
   description: ""

@@ -44,6 +44,7 @@ def main():
     # Generating the file
     for file in args.file:
         info = load_excel(file, index_col=0).to_dict()
+        info["tags"] = tags.get(file.stem, ["orpheline"])
         collected_infos["UE_codes"][file.stem] = info
 
     markdown = render_markdown(template, collected_infos, args.tags)
