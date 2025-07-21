@@ -1,11 +1,61 @@
-# Parcours solides
+# Parcours "Solides"
+
+## Master 1
+
+### Semestre 1
+{% for ue_code, info in UE_codes.items() %}
+{%- if "solides" in info.tags %}
+{%- if "UM4" in ue_code and "S1" in info.semester_en.value %}
+{%- if info.title_fr is defined and info.title_en is defined %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{% else %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{%- endif %}
+{%- endif %}
+{%- endif %}
+{%- endfor %}
+
+### Semestre 2
+
+{% for ue_code, info in UE_codes.items() %}
+{%- if "solides" in info.tags and "UM4" in ue_code and "S2" in info.semester_en.value %}
+{%- if info.title_fr is defined and info.title_en is defined %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{% else %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{%- endif %}
+{%- endif %}
+{%- endfor %}
+
+## Master 2
+
+### Semestre 1
+{% for ue_code, info in UE_codes.items() %}
+{%- if "solides" in info.tags and "UM5" in ue_code and "S1" in info.semester_en.value %}
+{%- if info.title_fr is defined and info.title_en is defined %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{% else %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{%- endif %}
+{%- endif %}
+{%- endfor %}
+
+### Semestre 2
+
+{% for ue_code, info in UE_codes.items() %}
+{%- if "solides" in info.tags and "UM5" in ue_code and "S2" in info.semester_en.value %}
+{%- if info.title_fr is defined and info.title_en is defined %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
+{%- endif %}
+{%- endif %}
+{%- endfor %}
+
+### Missing infos for the following UE
 
 {% for ue_code, info in UE_codes.items() %}
 {%- if "solides" in info.tags %}
-{%- if info.title_fr is defined and info.title_en is defined %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
-{% else %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{%- if info.title_fr is defined or info.title_en is not defined %}
+- [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
 {%- endif %}
 {%- endif %}
 {%- endfor %}
