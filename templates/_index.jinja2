@@ -14,7 +14,6 @@
 {% else %}
 ### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
 {% endif %}
-
 {% if info.resp_name is defined %}
 *Responsable(s) : {{ info.resp_name.value | trim }}*
 {% else %}

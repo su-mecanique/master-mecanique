@@ -54,7 +54,7 @@
 
 {% for ue_code, info in UE_codes.items() %}
 {%- if "solides" in info.tags %}
-{%- if info.title_fr is defined or info.title_en is not defined %}
+{%- if info.title_fr is not defined or info.title_en is not defined %}
 - [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
 {%- endif %}
 {%- endif %}
