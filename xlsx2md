@@ -45,7 +45,9 @@ def main():
 
     # Reading template
     with open(args.template) as fd:
-        template = jinja2.Template(fd.read())
+        template = jinja2.Environment(
+            loader=jinja2.FileSystemLoader('templates')
+        ).from_string(fd.read())
 
     # Reading tags
     tags = load_codes_ue(args.list_ue)

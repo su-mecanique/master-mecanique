@@ -1,11 +1,11 @@
 ---
 {%- if title_fr is defined and title_en is defined %}
-title: "{{ code.value }} -- {{ title_fr.value }} ({{ title_en.value }})"
+title: "{{ code.value }} -- {{ title_fr.value|e }} ({{ title_en.value|e }})"
 {%- else %}
 title: "{{ code.value }} -- TITRE À REMPLIR OBLIGATOIREMENT !"
 {%- endif %}
 {%- if resp_name is defined %}
-author: "{{ resp_name.value }}"
+author: "{{ resp_name.value|e }}"
 {%- else %}
 author: "RESPONSABLE À REMPLIR OBLIGATOIREMENT"
 {%- endif %}
@@ -24,18 +24,18 @@ date: "{{ modified_date }}"
 |         |          |
 | ------- | -------- |
 {%- for key, info in GENERIC_INFOS.items() %}
-| **{{ TAG_TITLES[key] }}** | {{ info.value }} |
+| **{{ TAG_TITLES[key]|e }}** | {{ info.value|e }} |
 {%- endfor %}
 
 # Informations pédagogiques
 {% for _, info in PEDAGOGICAL_INFOS.items() %}
-## {{ info.tag }}
-{{ info.value | replace('# ', '### ') }}
+## {{ info.tag|e }}
+{{ info.value | replace('# ', '### ') | e }}
 {% endfor %}
 {% if references is defined %}
 ## Bibliographie
 {% for line in references.value.split('\n') %}
-  {{ line | replace('#', '') }}
+  {{ line | replace('#', '') | e }}
 {% endfor %}
 {% endif %}
 

@@ -63,14 +63,14 @@ $(STATIC):
 
 
 # Make individual UE markdown files
-$(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE) $(LIST_UE)
+$(CONTENT)/%.md: $(EXCEL_DIR)/%.xlsx $(UE_TEMPLATE) $(CONTENT) $(TAG_FILE) $(LIST_UE) xlsx2md
 	./xlsx2md \
 		--output-dir $(CONTENT) \
 		--template $(UE_TEMPLATE) \
 		--tags $(TAG_FILE) --list-ue $(LIST_UE) $<
 
 # Generic rule to make index pages
-$(ROOT)/%.md: templates/%.jinja2 $(UE_FILES) $(TAG_FILE) $(LIST_UE) mkindex
+$(ROOT)/%.md: templates/%.jinja2 $(UE_FILES) $(TAG_FILE) $(LIST_UE) mkindex templates/_macros.jinja2
 	./mkindex -o $@ -t $< --tags $(TAG_FILE) --list-ue $(LIST_UE) $(UE_FILES)
 
 # Generate html website

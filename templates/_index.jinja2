@@ -1,3 +1,5 @@
+{% import '_macros.jinja2' as macros %}
+
 # Liste des UE du Master mention mécanique à Sorbonne Université
 
 ## Parcours
@@ -9,17 +11,12 @@
 
 ## Liste des unités d'enseignement ([Catalogue PDF](catalog.pdf))
 {% for ue_code, info in UE_codes.items() %}
-{% if info.title_fr is defined and info.title_en is defined %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
-{% else %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
-{% endif %}
+###  {{ macros.safe_print_ue(ue_code, info) }}
 {% if info.resp_name is defined %}
-*Responsable(s) : {{ info.resp_name.value | trim }}*
+*Responsable(s) : {{ info.resp_name.value | trim | e }}*
 {% else %}
 *Responsable(s) : RESPONSABLE À REMPLIR OBLIGATOIREMENT*
 {% endif %}
-
-{%- endfor %}
+{% endfor %}
 
 -----------------------------------
