@@ -1,19 +1,17 @@
+{% import '_macros.jinja2' as macros %}
+
 # Liste des modalites d'évaluation par UE
 
 {% for ue_code, info in UE_codes.items() %}
-{% if info.title_fr is defined and info.title_en is defined %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- {{ info.title_fr.value }} ({{ info.title_en.value }}) ([pdf]({{ ue_code }}.pdf))
-{% else %}
-### [{{ ue_code }}](page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
-{% endif %}
-
+### {{ macros.safe_print_ue(ue_code, info) }}
 {% if info.eval_fr is defined %}
-{{ info.eval_fr.value }}
+{{ info.eval_fr.value|e }}
 {% endif %}
 {% if info.eval_en is defined %}
-{{ info.eval_en.value }}
+{{ info.eval_en.value|e }}
 {% endif %}
 {% if info.eval_fr is not defined and info.eval_en is not defined %}
 N/A
 {% endif %}
+----------------------------------------------
 {%- endfor %}
