@@ -3,26 +3,14 @@
 # Parcours "Solides"
 
 ## Master 1
-### Semestre 1
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM4", "S1") -%}
-- {{ macros.safe_print_ue(ue_code, info) }}
-{%- endcall %}
-
-### Semestre 2
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM4", "S2") -%}
+{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM4", "") -%}
 - {{ macros.safe_print_ue(ue_code, info) }}
 {%- endcall %}
 
 ---------------------------------------------------------------------------------
 
 ## Master 2
-### Semestre 1
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM5", "S3") -%}
-- {{ macros.safe_print_ue(ue_code, info) }}
-{%- endcall %}
-
-### Semestre 2
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM5", "S4") -%}
+{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM5", "") -%}
 - {{ macros.safe_print_ue(ue_code, info) }}
 {%- endcall %}
 
