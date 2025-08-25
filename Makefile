@@ -20,6 +20,17 @@ UE_PDF = $(patsubst %.xlsx,%.pdf,$(subst $(EXCEL_DIR),$(STATIC),$(UE_FILES)))
 TAG_FILE = tags.toml
 LIST_UE = listes_ue.toml
 
+# List of index pages
+INDEX_MD = \
+		$(ROOT)/_index.md \
+		$(ROOT)/mcc.md \
+		$(ROOT)/solides.md \
+		$(ROOT)/physique-mecanique.md \
+		$(ROOT)/fluides.md \
+		$(ROOT)/acoustique.md \
+    $(ROOT)/energetique.md \
+    $(ROOT)/computational-mechanics.md
+
 #-------------------------------------------------------------------------------------------
 
 # Variables for html generation
@@ -44,7 +55,7 @@ PDF_FLAGS = --resource-path=$(FIGURES) \
 # Shorthand targets
 all: html pdf markdown
 html: $(INDEX_HTML)
-markdown: $(UE_MARKDOWN) $(ROOT)/_index.md $(ROOT)/mcc.md $(ROOT)/solides.md
+markdown: $(UE_MARKDOWN) $(INDEX_MD)
 pdf: $(UE_PDF) $(STATIC)/catalog.pdf
 
 

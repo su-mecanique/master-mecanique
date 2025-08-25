@@ -1,26 +1,2 @@
 {% import '_macros.jinja2' as macros %}
-
-# Parcours "Solides"
-
-## Master 1
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM4", "") -%}
-- {{ macros.safe_print_ue(ue_code, info, '../') }}
-{%- endcall %}
-
----------------------------------------------------------------------------------
-
-## Master 2
-{% call(ue_code, info) macros.ue_filt(UE_codes, "solides", "UM5", "") -%}
-- {{ macros.safe_print_ue(ue_code, info, '../') }}
-{%- endcall %}
-
----------------------------------------------------------------------------------
-
-## Missing infos for the following UE
-{% for ue_code, info in UE_codes.items() %}
-{%- if "solides" in info.tags %}
-{%- if info.title_fr is not defined or info.title_en is not defined %}
-- [{{ ue_code }}](../page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
-{%- endif %}
-{%- endif %}
-{%- endfor %}
+{{ macros.parcours(UE_codes, "solides", "Solides") }}

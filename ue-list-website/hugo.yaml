@@ -25,6 +25,21 @@ menu:
     - name: Solides
       url: "solides/"
       weight: 4
+    - name: Physique-Mécanique
+      url: "physique-mecanique/"
+      weight: 5
+    - name: Fluides
+      url: "fluides/"
+      weight: 6
+    - name: Acoustique
+      url: "acoustique/"
+      weight: 7
+    - name: Energetique
+      url: "energetique/"
+      weight: 8
+    - name: Computational-Mechanics
+      url: "computational-mechanics/"
+      weight: 9
 
 params:
   description: ""

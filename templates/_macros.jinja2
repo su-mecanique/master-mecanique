@@ -16,3 +16,30 @@
 {% endif %}
 {%- endfor -%}
 {% endmacro %}
+
+{% macro parcours(UE_codes, index_tag, title) %}
+# Parcours "{{ title }}"
+
+## Master 1
+{% call(ue_code, info) ue_filt(UE_codes, index_tag, "UM4", "") -%}
+- {{ safe_print_ue(ue_code, info, '../') }}
+{%- endcall %}
+
+---------------------------------------------------------------------------------
+
+## Master 2
+{% call(ue_code, info) ue_filt(UE_codes, index_tag, "UM5", "") -%}
+- {{ safe_print_ue(ue_code, info, '../') }}
+{%- endcall %}
+
+---------------------------------------------------------------------------------
+
+## Missing infos for the following UE
+{% for ue_code, info in UE_codes.items() %}
+{%- if index_tag in info.tags %}
+{%- if info.title_fr is not defined or info.title_en is not defined %}
+- [{{ ue_code }}](../page/{{ ue_code | lower() }}) -- TITRE À REMPLIR OBLIGATOIREMENT ([pdf]({{ ue_code }}.pdf))
+{%- endif %}
+{%- endif %}
+{%- endfor %}
+{% endmacro %}
