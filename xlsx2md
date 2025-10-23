@@ -18,6 +18,7 @@ from ue_mecanique import (
     extract_excel_image,
     extract_external_image,
     load_codes_ue,
+    load_year_ue,
 )
 
 def get_git_date(file):
@@ -59,6 +60,9 @@ def main():
     info["code"] = {
         "value": file.stem,
     }
+
+    year = load_year_ue(args.list_ue, file.stem)
+    info["year"] = dict(value=year)
 
     if False and ("image" in info) and (info["image"]["value"] != ""):
         image_file = extract_external_image(

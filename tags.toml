@@ -10,6 +10,7 @@ GENERIC_INFOS = [
     "ects",
     "semester_en",
     "semester_fr",
+    "year",
     "period_fr",
     "period_en",
     "lang_fr",
@@ -44,6 +45,7 @@ h_td = "Volume h TD / Amount of exercise hours"
 h_tp = "Volume h TP / Amount of practical work hours"
 h_pr = "Volume h Projet / Amount of project hours"
 ects = "ECTS"
+year = "Année / Year"
 semester_fr = "Semestre"
 semester_en = "Semester"
 period_fr = "Periode (pour les cours M2)"

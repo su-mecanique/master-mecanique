@@ -85,6 +85,18 @@ def load_codes_ue(ue_list_file: str):
     with open(ue_list_file, "rb") as fh:
         return reverse_tags_ue(tomllib.load(fh), 0)
 
+def load_year_ue(ue_list_file: str, code: str):
+    "Get the year (m1 or m2)"
+    with open(ue_list_file, "rb") as fh:
+        tags = reverse_tags_ue(tomllib.load(fh), 1)
+
+    for tag in tags[code]:
+        if "m1" in tag:
+            return "Master 1"
+        if "m2" in tag:
+            return "Master 2"
+    return "unknown"
+
 
 def load_excel(
     filename: str, path: str = os.getcwd(), tab: int = 0, **kwargs
