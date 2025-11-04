@@ -10,8 +10,7 @@
 
 {% macro ue_filt(UE_codes, tag, code_prefix, semester) %}
 {%- for ue_code, info in UE_codes.items() -%}
-{%- if tag in info.tags and code_prefix in ue_code and info.semester_en is
-  defined and  semester in info.semester_en.value -%}
+{%- if tag in info.tags and code_prefix in ue_code -%}
 {{ caller(ue_code, info) }}
 {% endif %}
 {%- endfor -%}
