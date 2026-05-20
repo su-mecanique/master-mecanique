@@ -1,6 +1,9 @@
 name: Run UE Mecanique Script
 
 on:
+  workflow_run:
+    workflows: ["Update Fiches UE"]
+    types: [completed]
   workflow_dispatch:
   push:
     branches:
